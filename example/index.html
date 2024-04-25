@@ -39,12 +39,12 @@
         }
 
 
-        message.responce.success = true;
+        message.response.success = true;
         message.send();//Отправим ответ timeout 50 сек
     });
 
     integrationConnect.route('getData', (message) => {
-        message['responce'] = {
+        message['response'] = {
             payload: {
                 public: {},
                 command_title: '',
@@ -61,8 +61,8 @@
 
             let public = {type: select_type};
             let command_title = $(`[for="typeChoice${select_type}"]`).text();
-            message.responce.payload['public'] = public;
-            message.responce.payload['command_title'] = command_title;
+            message.response.payload['public'] = public;
+            message.response.payload['command'] = command_title;
             message.send();//Отправим ответ timeout 50 сек
         }
 
