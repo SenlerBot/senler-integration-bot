@@ -10,7 +10,7 @@ npm i senler-integration-bot
 
 Документация [Интеграций Senler](https://app.gitbook.com/o/-L_IF5TbiMa8dxgx_94P/s/-L_IF5Te3IJsAOAjS0Js/~/changes/5KXCjOJaCW3x6DidncV4/chat-boty-integracii).
 
- 
+ 1
 ## Чтение настроек
 При открытии модального окна и загрузки интеграции через iframe. Событие onload. Senler отправляет запрос `setData` c настройками из шага.
 
