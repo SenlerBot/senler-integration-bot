@@ -8,9 +8,9 @@
 npm i senler-integration-bot
 ```
 
-Документация [Интеграций Senler](https://app.gitbook.com/o/-L_IF5TbiMa8dxgx_94P/s/-L_IF5Te3IJsAOAjS0Js/~/changes/5KXCjOJaCW3x6DidncV4/chat-boty-integracii).
+Документация [Интеграций Senler](https://help.senler.ru/senler/dev/prilozheniya).
 
- 1
+
 ## Чтение настроек
 При открытии модального окна и загрузки интеграции через iframe. Событие onload. Senler отправляет запрос `setData` c настройками из шага.
 
@@ -26,7 +26,7 @@ integrationConnect.route('setData', (message) => {
         if ('public' in settings) {
             setPublicSettings(JSON.parse(settings.public))
         }
-        message.responce.success = true;
+        message.response.success = true;
         message.send();//Отправим ответ timeout 50 сек
 });
 ```
@@ -37,15 +37,16 @@ integrationConnect.route('setData', (message) => {
 Интеграция обрабатывает запрос следующим образом:
 ```js
  integrationConnect.route('getData', (message) => {
-    message['responce'] = {
+    message['response'] = {
         payload: {},
         success: true
     };
 
-    message.responce.payload['public'] =  JSON.parse(localStorage.getItem('public_settings'));
-    message.responce.payload['private'] = JSON.parse(localStorage.getItem('private_settings'));
+    message.response.payload['public'] =  JSON.parse(localStorage.getItem('public_settings'));
+    message.response.payload['private'] = JSON.parse(localStorage.getItem('private_settings'));
 
-    message.responce.payload['command_title'] = 'Бот шлет сообщение с подписчиком';
+    message.response.payload['command'] = 'Отправить сообщение';
+    message.response.payload['description'] = 'ChatId 1000000';
 
     message.send();//Отправим ответ timeout 50 сек
 });
@@ -53,25 +54,25 @@ integrationConnect.route('setData', (message) => {
 ## Cтруктра данных  Window.postMessage() сообщения
 ```json
 {
-    "payload": {
-        "public": "123 123 123 %last_name%",
-        "private": [
-            {
-                "id": "ToIl1LHrgzX-VEMg55yCy",
-                "chat_id": "560572781",
-                "token": "1925730357:AAELFz-Rm43Eavdw5wcpmrCxXHl9iqWwpe0",
-                "user_id": 1667583788069
-            }
-        ],
-        "command_title": "Example One"
-    },
-    "type": "getData",
-    "success": true    
+  "payload": {
+    "public": "user name %first_nmae% user fam %last_name% \nvkid= %vk_id%",
+    "private": [
+      {
+        "id": "342173_268775_1668242955756",
+        "chat_id": "1000000",
+        "token": "mytoken123",
+        "user_id": "342173_268775_1668242955756"
+      }
+    ],
+    "command": "Отправить сообщение",
+    "description": "ChatId 1000000"
+  }
 }
 ```
 - `public` - публичные настройки
 - `private` - приватные настройки, очищаются при копировании бота
-- `command_title` - заголовок в редакторе бота
+- `command` - название команды в шаге бота
+- `description` - описание команды в шаге бота
 
 Для браузера [`dist/bundle.js`](https://unpkg.com/senler-integration-bot/dist/bundle.js)
 
